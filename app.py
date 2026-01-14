@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.patches import FancyBboxPatch, Circle, Polygon
 import math
+import japanize_matplotlib
 
 # ページ設定
 st.set_page_config(
