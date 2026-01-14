@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.patches import FancyBboxPatch, Circle, Polygon
 import math
-import japanize_matplotlib
+
+# 日本語フォント設定（Linux/Cloud環境用）
+plt.rcParams['font.family'] = ['DejaVu Sans', 'Noto Sans CJK JP', 'IPAGothic', 'sans-serif']
 
 # ページ設定
 st.set_page_config(
