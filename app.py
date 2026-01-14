@@ -3,9 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.patches import FancyBboxPatch, Circle, Polygon
 import math
-
-# 日本語フォント設定（Linux/Cloud環境用）
-plt.rcParams['font.family'] = ['DejaVu Sans', 'Noto Sans CJK JP', 'IPAGothic', 'sans-serif']
+import japanize_matplotlib
 
 # ページ設定
 st.set_page_config(
@@ -448,7 +446,7 @@ ax.set_ylabel('高さ (m)', fontsize=12, fontweight='bold')
 ax.set_title('🚛 トラック積載側面図', fontsize=18, fontweight='bold', pad=20)
 ax.grid(True, alpha=0.3, linestyle='--')
 
-plt.rcParams['font.family'] = 'MS Gothic'
+
 plt.tight_layout()
 st.pyplot(fig)
 plt.close()
