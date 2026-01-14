@@ -214,10 +214,10 @@ def calculate_with_spacer_height(L_prod, prod_width, W_max, H_max, X_spacer, spa
         results['error'] = f"許容横幅({product_right_x:.0f}mm > {W_max}mm)と許容高さ({product_top_height:.0f}mm > {H_max}mm)を超えています"
         results['can_fit'] = False
     elif not width_ok:
-        results['error'] = f"許容横幅 {W_max}mm を超えます（{product_right_x:.0f}mm）。スペーサーを高くしてください。"
+        results['error'] = f"許容横幅 {W_max}mm を超えます（{product_right_x:.0f}mm）。"
         results['can_fit'] = False
     elif not height_ok:
-        results['error'] = f"許容高さ {H_max}mm を超えます（{product_top_height:.0f}mm）。スペーサーを低くしてください。"
+        results['error'] = f"許容高さ {H_max}mm を超えます（{product_top_height:.0f}mm）。"
         results['can_fit'] = False
     else:
         results['success'] = f"✅ 許容範囲内（横: {product_right_x:.0f}mm, 高さ: {product_top_height:.0f}mm）"
@@ -250,13 +250,10 @@ with result_col1:
         """, unsafe_allow_html=True)
     
     if results['spacer_height_mm'] > 0:
-        spacer_cm = results['spacer_height_mm'] / 10
-        
         st.markdown(f"""
         <div class="result-box">
             <p class="big-font">🎯 必要なスペーサー高さ</p>
-            <p class="spacer-value">{spacer_cm:.1f} cm</p>
-            <p style="font-size: 18px; color: #666;">（{results['spacer_height_mm']:.0f} mm）</p>
+            <p class="spacer-value">{results['spacer_height_mm']:.0f} mm</p>
         </div>
         """, unsafe_allow_html=True)
         
