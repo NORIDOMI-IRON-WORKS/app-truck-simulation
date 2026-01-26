@@ -324,21 +324,26 @@ roof_carrier = patches.Rectangle(
 )
 ax.add_patch(roof_carrier)
 
-# タイヤ
-for wx in [1.2, 2.5, cabin_x + 0.8]:
-    wheel = Circle((wx, 0.4), 0.4, facecolor='#333333', edgecolor='#1A1A1A', linewidth=2)
-    ax.add_patch(wheel)
-    hub = Circle((wx, 0.4), 0.15, facecolor='#666666')
-    ax.add_patch(hub)
-
-# 荷台
-frame = patches.Rectangle((0, bed_h - 0.15), bed_len, 0.15,
+# 荷台（下端をタイヤの高さの半分に配置、上端は元の位置bed_h）
+wheel_center_y = 0.4
+wheel_radius = 0.4
+wheel_top = wheel_center_y + wheel_radius  # タイヤの上端
+frame_bottom = wheel_top / 2  # タイヤの高さの半分
+frame_thickness = bed_h - frame_bottom  # 下端から元の荷台高さまでの厚さ
+frame = patches.Rectangle((0, frame_bottom), bed_len, frame_thickness,
                             facecolor='#607D8B', edgecolor='#455A64', linewidth=2)
 ax.add_patch(frame)
 
 bed_floor = patches.Rectangle((0, bed_h), bed_len, 0.05,
                                 facecolor='#795548', edgecolor='#5D4037', linewidth=1)
 ax.add_patch(bed_floor)
+
+# タイヤ（荷台の後に描画して手前に表示）
+for wx in [1.2, 2.5, cabin_x + 0.8]:
+    wheel = Circle((wx, wheel_center_y), wheel_radius, facecolor='#333333', edgecolor='#1A1A1A', linewidth=2)
+    ax.add_patch(wheel)
+    hub = Circle((wx, wheel_center_y), 0.15, facecolor='#666666')
+    ax.add_patch(hub)
 
 # スペーサー
 spacer_x_pos = X_spacer * scale
