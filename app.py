@@ -301,44 +301,49 @@ bed_h = truck_bed_height * scale
 bed_len = truck_bed_length * scale
 roof_h = roof_carrier_height * scale
 
-# キャビン
+# キャビン（運転席の高さを固定：地面から2.5m）
 cabin_x = bed_len + 0.1
-cabin_height = roof_h - bed_h + 0.5
+cabin_height = 2.4  # 固定値（地面からの高さ）
 cabin = FancyBboxPatch(
-    (cabin_x, bed_h - 0.3), 1.5, cabin_height,
+    (cabin_x, 0.1), 1.5, cabin_height,
     boxstyle="round,pad=0.02,rounding_size=0.1",
     facecolor='#FFFFFF', edgecolor='#333333', linewidth=2
 )
 ax.add_patch(cabin)
 
 window = patches.Rectangle(
-    (cabin_x + 0.15, bed_h + 0.6), 1.2, 0.7,
+    (cabin_x + 0.15, 1.2), 1.2, 0.8,
     facecolor='#B3E5FC', edgecolor='#333333', linewidth=1.5
 )
 ax.add_patch(window)
 
-# ルーフキャリア
+# ルーフキャリア（垂直に配置）
 roof_carrier = patches.Rectangle(
-    (bed_len - 0.1, roof_h - 0.05), 1.7, 0.1,
+    (bed_len - 0.05, bed_h), 0.1, roof_h - bed_h,
     facecolor='#455A64', edgecolor='#263238', linewidth=2
 )
 ax.add_patch(roof_carrier)
 
-# タイヤ
-for wx in [1.2, 2.5, cabin_x + 0.8]:
-    wheel = Circle((wx, 0.4), 0.4, facecolor='#333333', edgecolor='#1A1A1A', linewidth=2)
-    ax.add_patch(wheel)
-    hub = Circle((wx, 0.4), 0.15, facecolor='#666666')
-    ax.add_patch(hub)
-
-# 荷台
-frame = patches.Rectangle((0, bed_h - 0.15), bed_len, 0.15,
+# 荷台（下端をタイヤの高さの半分に配置、上端は元の位置bed_h）
+wheel_center_y = 0.4
+wheel_radius = 0.4
+wheel_top = wheel_center_y + wheel_radius  # タイヤの上端
+frame_bottom = wheel_top / 2  # タイヤの高さの半分
+frame_thickness = bed_h - frame_bottom  # 下端から元の荷台高さまでの厚さ
+frame = patches.Rectangle((0, frame_bottom), bed_len, frame_thickness,
                             facecolor='#607D8B', edgecolor='#455A64', linewidth=2)
 ax.add_patch(frame)
 
 bed_floor = patches.Rectangle((0, bed_h), bed_len, 0.05,
                                 facecolor='#795548', edgecolor='#5D4037', linewidth=1)
 ax.add_patch(bed_floor)
+
+# タイヤ（荷台の後に描画して手前に表示）
+for wx in [1.2, 2.5, cabin_x + 0.8]:
+    wheel = Circle((wx, wheel_center_y), wheel_radius, facecolor='#333333', edgecolor='#1A1A1A', linewidth=2)
+    ax.add_patch(wheel)
+    hub = Circle((wx, wheel_center_y), 0.15, facecolor='#666666')
+    ax.add_patch(hub)
 
 # スペーサー
 spacer_x_pos = X_spacer * scale
